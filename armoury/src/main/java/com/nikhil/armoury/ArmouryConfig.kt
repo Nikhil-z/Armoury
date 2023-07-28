@@ -8,8 +8,10 @@
 
 package com.nikhil.armoury
 
+import com.nikhil.armoury.utils.ArmouryInitializerException
 import com.nikhil.armoury.utils.Environment
 import com.nikhil.armoury.utils.OtherUtils.select
+import com.nikhil.armoury.utils.OtherUtils.validateBaseUrl
 
 
 open class ArmouryBuilder {
@@ -28,6 +30,7 @@ open class ArmouryBuilder {
 
     /** Pass single of multiple base urls*/
     fun setBaseUrls(baseUrls: BaseUrls): ArmouryBuilder {
+        validateBaseUrl(baseUrls)
         this.baseUrls = baseUrls
         return this
     }

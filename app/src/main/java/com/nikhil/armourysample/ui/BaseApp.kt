@@ -10,7 +10,6 @@ package com.nikhil.armourysample.ui
 
 import android.app.Application
 import com.nikhil.armoury.ArmouryBuilder
-import com.nikhil.armoury.BaseUrls
 import com.nikhil.armoury.utils.Environment
 import com.nikhil.armourysample.ui.network.prepareUrls
 

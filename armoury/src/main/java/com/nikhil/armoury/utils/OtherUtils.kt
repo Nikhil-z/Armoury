@@ -23,4 +23,9 @@ internal object OtherUtils {
             }
         }
     }
+
+    fun validateBaseUrl(baseUrls: BaseUrls) {
+        if (baseUrls.production == "" && baseUrls.stage == "" && baseUrls.test == "" && baseUrls.development == "")
+            throw ArmouryInitializerException("The base URL must not be left empty.")
+    }
 }

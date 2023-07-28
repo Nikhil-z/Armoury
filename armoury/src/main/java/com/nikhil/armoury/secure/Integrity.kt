@@ -10,17 +10,19 @@ package com.nikhil.armoury.secure
 
 import android.accounts.AuthenticatorException
 import android.content.Context
+import com.nikhil.armoury.utils.ArmouryAuthException
 import timber.log.Timber
 
 
 internal object Integrity {
 
     fun verify(context: Context): Boolean {
-        val isAuthorized= when (context.packageName) {
+        val isAuthorized = when (context.packageName) {
             "com.nikhil.armourysample" -> {
                 Timber.d("Armoury access successful")
                 true
             }
+
             else -> {
                 Timber.d("Integrity check has failed!! Authorization denied for Armoury access")
 
@@ -28,8 +30,8 @@ internal object Integrity {
             }
         }
 
-        if (!isAuthorized){
-            throw AuthenticatorException("Integrity check has failed!! Authorization denied for Armoury access")
+        if (!isAuthorized) {
+            throw ArmouryAuthException()
         }
 
         return isAuthorized

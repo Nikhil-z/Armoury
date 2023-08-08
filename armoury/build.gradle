@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id("maven-publish")
 }
 
 android {
@@ -28,6 +29,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
 }
 
 dependencies {
@@ -51,3 +53,19 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
 }
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.github.Nikhil-z"
+            artifactId = "Armoury"
+            version = "1.0.0"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+}
+
+

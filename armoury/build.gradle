@@ -66,31 +66,4 @@ afterEvaluate {
     }
 }
 
-/*publishing {
-    *//*publications {
-        register<MavenPublication>("release") {
-            groupId = "com.github.Nikhil-z"
-            artifactId = "Armoury"
-            version = "1.0.0"
-            from components.java
-
-            afterEvaluate {
-                from(components["release"])
-            }
-        }*//*
-
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.github.Nikhil-z'
-            artifactId = 'Armoury'
-            version = "1.0.2"
-            // from components.java
-
-            pom {
-                description = 'Your network module'
-            }
-        }
-    }
-}*/
-
 

@@ -18,7 +18,7 @@ internal object Integrity {
 
     fun verify(context: Context): Boolean {
         val isAuthorized = when (context.packageName) {
-            "com.nikhil.armourysample" -> {
+            "com.nikhil.armourysample","com.digital.signage" -> {
                 Timber.d("Armoury access successful")
                 true
             }

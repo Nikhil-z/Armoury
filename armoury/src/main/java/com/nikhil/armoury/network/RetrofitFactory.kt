@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 
 internal object RetrofitFactory {
 
@@ -26,6 +27,7 @@ internal object RetrofitFactory {
         .build()
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        Timber.d("Is debug mode available ? ${ArmouryHouse.config().isDebugMode()}")
         level = if (ArmouryHouse.config().isDebugMode()) {
             HttpLoggingInterceptor.Level.BODY
         } else {

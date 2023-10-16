@@ -17,6 +17,10 @@ object Armoury {
         return ArmouryHouse.config().baseUrl()
     }
 
+    fun isDebuggingActive():Boolean{
+        return ArmouryHouse.config().isDebugMode()
+    }
+
     /** pass base url for API*/
     fun <S> pickFight(serviceClass: Class<S>): S {
         return Network.retrofitClient(serviceClass)

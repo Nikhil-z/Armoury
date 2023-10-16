@@ -1,11 +1,13 @@
 package com.nikhil.armoury.utils.base
 
+import android.util.Log
 import com.nikhil.armoury.utils.NetworkUtils
 import com.nikhil.armoury.utils.callback.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 
 open class BaseRepository {
@@ -33,7 +35,11 @@ open class BaseRepository {
                     // response in ExampleErrorResponse pojo
                     //   val errorResponse: ExampleErrorResponse? = convertErrorBody(response.errorBody())
                     // Simply returning api's own failure message
-                    Resource.Error(errorMessage = /*errorResponse?.failureMessage ?:*/ "Something went wrong (unSuccessful) ${response.errorBody().toString()}")
+                    Resource.Error(
+                        errorMessage = /*errorResponse?.failureMessage ?:*/ "Something went wrong (unSuccessful) ${
+                            response.errorBody().toString()
+                        }"
+                    )
                 }
 
             } catch (e: HttpException) {
@@ -47,7 +53,7 @@ open class BaseRepository {
             } catch (e: Exception) {
                 // Returning 'Something went wrong' in case
                 // of unknown error wrapped in Resource.Error
-                Resource.Error(errorMessage = "Something went wrong (Exception)")
+                Resource.Error(errorMessage = "${e.message} Something went wrong (Exception)")
             }
         }
     }

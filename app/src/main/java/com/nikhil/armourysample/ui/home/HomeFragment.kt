@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.nikhil.armoury.utils.callback.Resource
 import com.nikhil.armourysample.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -34,13 +35,32 @@ class HomeFragment : Fragment() {
             textView.text = it
         }
 
+
+
         homeViewModel.deviceConfiguration.observe(viewLifecycleOwner) { configModelResource ->
 
-            configModelResource.data?.let {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            when (configModelResource) {
+                is Resource.Success -> {
+
+                    Toast.makeText(requireContext(), "Success ${configModelResource.message}", Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), "Error ${configModelResource.message}", Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Loading -> {
+                    Toast.makeText(requireContext(), "Loading ${configModelResource.message}", Toast.LENGTH_SHORT).show()
+                }
             }
 
-            Toast.makeText(requireContext(), "${configModelResource.message}", Toast.LENGTH_SHORT).show()
+            /*  configModelResource.data?.let {
+                  Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+              }
+
+
+              Toast.makeText(requireContext(), "${configModelResource.message}", Toast.LENGTH_SHORT)
+                  .show()*/
         }
 
 

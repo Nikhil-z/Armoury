@@ -33,13 +33,13 @@ open class BaseRepository {
                     // response in ExampleErrorResponse pojo
                     //   val errorResponse: ExampleErrorResponse? = convertErrorBody(response.errorBody())
                     // Simply returning api's own failure message
-                    Resource.Error(errorMessage = /*errorResponse?.failureMessage ?:*/ "Something went wrong")
+                    Resource.Error(errorMessage = /*errorResponse?.failureMessage ?:*/ "Something went wrong (unSuccessful) ${response.errorBody().toString()}")
                 }
 
             } catch (e: HttpException) {
                 // Returning HttpException's message
                 // wrapped in Resource.Error
-                Resource.Error(errorMessage = e.message ?: "Something went wrong")
+                Resource.Error(errorMessage = e.message ?: "Something went wrong (HttpException)")
             } catch (e: IOException) {
                 // Returning no internet message
                 // wrapped in Resource.Error
@@ -47,7 +47,7 @@ open class BaseRepository {
             } catch (e: Exception) {
                 // Returning 'Something went wrong' in case
                 // of unknown error wrapped in Resource.Error
-                Resource.Error(errorMessage = "Something went wrong")
+                Resource.Error(errorMessage = "Something went wrong (Exception)")
             }
         }
     }

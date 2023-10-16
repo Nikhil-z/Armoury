@@ -1,6 +1,7 @@
 package com.nikhil.armourysample.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.nikhil.armoury.utils.callback.Resource
 import com.nikhil.armourysample.databinding.FragmentHomeBinding
+import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
@@ -37,20 +39,33 @@ class HomeFragment : Fragment() {
 
 
 
-        homeViewModel.deviceConfiguration.observe(viewLifecycleOwner) { configModelResource ->
+        homeViewModel.sign.observe(viewLifecycleOwner) { configModelResource ->
 
             when (configModelResource) {
                 is Resource.Success -> {
 
-                    Toast.makeText(requireContext(), "Success ${configModelResource.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Success ${configModelResource.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(requireContext(), "Error ${configModelResource.message}", Toast.LENGTH_SHORT).show()
+                    Log.d(this::class.java.simpleName, "${configModelResource.message}")
+                    Toast.makeText(
+                        requireContext(),
+                        "Error ${configModelResource.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is Resource.Loading -> {
-                    Toast.makeText(requireContext(), "Loading ${configModelResource.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Loading ${configModelResource.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 

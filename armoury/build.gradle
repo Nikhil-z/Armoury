@@ -40,7 +40,7 @@ def publicationArtifactId = 'armoury'
 publishing {
     publications {
 
-        bar(MavenPublication) {
+        release(MavenPublication) {
             groupId = publicationGroup // Replace with group ID
             artifactId = publicationArtifactId
             version = publicationVersion

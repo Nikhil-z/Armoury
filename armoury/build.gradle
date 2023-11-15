@@ -32,33 +32,75 @@ android {
 
 }
 
+
+def publicationGroup = 'com.github.Nikhil-z'
+def publicationVersion = '1.0.14'
+def publicationArtifactId = 'armoury'
+
 publishing {
+    publications {
+
+        bar(MavenPublication) {
+            groupId = publicationGroup // Replace with group ID
+            artifactId = publicationArtifactId
+            version = publicationVersion
+            artifact("$buildDir/outputs/aar/${publicationArtifactId}-release.aar")
+        }
+        /*release(MavenPublication) {
+            groupId = publicationGroup
+            artifactId = publicationArtifactId
+            version = publicationVersion
+
+            from components.release
+            artifact sourceJar
+            artifact("$buildDir/outputs/aar/armoury-release.aar")
+        }*/
+    }
 
     repositories {
         maven {
-
-
-            /*groupId = 'com.example' // Replace with your desired group ID
-            artifactId = 'library-name' // Replace with your library's artifact ID*/
-
-            //version = '1.0.0' // Replace with the version you want to publish
-
-            // Configure artifacts to be published (e.g., AAR file)
-            artifact ("$buildDir/outputs/aar/armoury-release.aar") {
-                builtBy assembleRelease
-            }
-
-
-
             name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/Nikhil-z/Armoury"
+            url = uri("https://maven.pkg.github.com/Nikhil-z/Armoury")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }
 }
+
+
+// Configuration for publishing to GitHub Packages
+/*publishing {
+    publications {
+        release(MavenPublication) {
+
+            from components.java // Use the java component for publishing
+
+
+            groupId = 'com.github.Nikhil-z'
+            artifactId = 'armoury'
+            version = '1.0.14'
+
+            // Attach the AAR file to the publication
+            from components.androidLibrary // Use the androidLibrary component
+
+            // Optionally, set the AAR file explicitly if needed
+            artifact("$buildDir/outputs/aar/armoury-release.aar")
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Nikhil-z/Armoury")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}*/
 
 dependencies {
 

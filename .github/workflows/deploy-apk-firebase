@@ -1,0 +1,40 @@
+name: Build and Deploy apk to firebase
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'android'
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Display APK Output
+        run: ls app/build/outputs/apk/debug
+
+      - name: Upload APK to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: internaltest
+          file: app/build/outputs/apk/debug/app-debug.apk

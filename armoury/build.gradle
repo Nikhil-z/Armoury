@@ -41,10 +41,14 @@ publishing {
             /*groupId = 'com.example' // Replace with your desired group ID
             artifactId = 'library-name' // Replace with your library's artifact ID*/
 
-            version = '1.0.0' // Replace with the version you want to publish
+            //version = '1.0.0' // Replace with the version you want to publish
 
             // Configure artifacts to be published (e.g., AAR file)
-           // artifact("$buildDir/outputs/aar/library-name-release.aar")
+            artifact ("$buildDir/outputs/aar/armoury-release.aar") {
+                builtBy assembleRelease
+            }
+
+
 
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/Nikhil-z/Armoury"
@@ -78,7 +82,8 @@ dependencies {
 
 }
 
-afterEvaluate {
+/*Used for deploying to Jcenter */
+/*afterEvaluate {
 
     android.libraryVariants.each { variant ->
         publishing.publications.create(variant.name, MavenPublication) {
@@ -88,6 +93,6 @@ afterEvaluate {
             version = "1.0.3"
         }
     }
-}
+}*/
 
 

@@ -1,0 +1,54 @@
+name: Auto Release and Tag
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create_release_and_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code with tags
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Fetch all history including tags
+
+      - name: Set up Git
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+  
+      - name: Get latest tag
+        id: get_tag
+        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+
+      - name: Determine next tag
+        id: determine_next_tag
+        run: |
+          latest_tag=${{ steps.get_tag.outputs.tag }}
+          # Increment the last digit of the tag for semantic versioning
+          # Extract major, minor, and patch versions
+          major=$(echo $latest_tag | cut -d '.' -f 1 | sed 's/v//')
+          minor=$(echo $latest_tag | cut -d '.' -f 2)
+          patch=$(echo $latest_tag | cut -d '.' -f 3 | awk -F'[+]' '{print $1}')
+          # Increment the patch version
+          next_tag="v${major}.${minor}.$((patch + 1))"
+          echo "::set-output name=next_tag::$next_tag"
+
+      - name: Create tag
+        run: git tag ${{ steps.determine_next_tag.outputs.next_tag }}
+
+     # - name: Push tag
+      #  run: git push origin ${{ steps.determine_next_tag.outputs.next_tag }}
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          tag_name: ${{ steps.determine_next_tag.outputs.next_tag }}
+          release_name: Release ${{ steps.determine_next_tag.outputs.next_tag }}
+          draft: false
+          prerelease: false

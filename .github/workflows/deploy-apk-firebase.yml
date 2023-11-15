@@ -35,3 +35,6 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: internaltest
           file: app/build/outputs/apk/debug/app-debug.apk
+          releaseNotes: |
+            This an automated release note for the APK.
+            Created by Nikhil-z.

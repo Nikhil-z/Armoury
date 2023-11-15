@@ -1,4 +1,4 @@
-name: Auto Release
+name: Auto Release and Tag
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  create_release:
+  create_release_and_tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code with tags
@@ -18,15 +18,25 @@ jobs:
         run: |
           git config user.email "github-actions@github.com"
           git config user.name "GitHub Actions"
-
   
       - name: Get latest tag
         id: get_tag
         run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
 
-      - name: Increment tag
-        id: increment_tag
-        run: echo "::set-output name=incremented_tag::$(echo ${{ steps.get_tag.outputs.tag }} | awk -F'[+]' '/+/{$1+=1} 1')"
+      - name: Determine next tag
+        id: determine_next_tag
+        run: |
+          latest_tag=${{ steps.get_tag.outputs.tag }}
+          # Add logic to generate the next tag based on the latest tag
+          # Example: Increment the last digit of the tag
+          next_tag=$(echo $latest_tag | awk -F'[+]' '/+/{$1+=1} 1')
+          echo "::set-output name=next_tag::$next_tag"
+
+      - name: Create tag
+        run: git tag ${{ steps.determine_next_tag.outputs.next_tag }}
+
+      - name: Push tag
+        run: git push origin ${{ steps.determine_next_tag.outputs.next_tag }}
 
       - name: Create release
         id: create_release
@@ -34,7 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         with:
-          tag_name: ${{ steps.increment_tag.outputs.incremented_tag }}
-          release_name: Release ${{ steps.increment_tag.outputs.incremented_tag }}
+          tag_name: ${{ steps.determine_next_tag.outputs.next_tag }}
+          release_name: Release ${{ steps.determine_next_tag.outputs.next_tag }}
           draft: false
           prerelease: false

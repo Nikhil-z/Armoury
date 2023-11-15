@@ -21,6 +21,9 @@ jobs:
           java-version: '17'  # Set your desired Java version here
           distribution: 'temurin'
 
+      - name: Grant execute permission to Gradle wrapper
+        run: chmod +x ./gradlew
+
       - name: Publish to GitHub Packages
         run: |
           ./gradlew publish  # Use the appropriate command for publishing in your project

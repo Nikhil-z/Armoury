@@ -44,7 +44,7 @@ publishing {
             groupId = publicationGroup // Replace with group ID
             artifactId = publicationArtifactId
             version = publicationVersion
-            artifact("$buildDir/outputs/aar/${publicationArtifactId}-debug.aar")
+            artifact("$buildDir/outputs/aar/${publicationArtifactId}-release.aar")
         }
     }
 

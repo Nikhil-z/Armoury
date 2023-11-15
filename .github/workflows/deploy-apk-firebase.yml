@@ -19,12 +19,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'android'
-
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
@@ -38,3 +32,4 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: internaltest
           file: app/build/outputs/apk/debug/app-debug.apk
+

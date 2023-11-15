@@ -23,7 +23,10 @@ jobs:
 
       - name: Grant execute permission to Gradle wrapper
         run: chmod +x ./gradlew
-
+        
+      - name: Build AAR ⚙️🛠
+        run: bash ./gradlew :armoury:assemble
+        
       - name: Publish to GitHub Packages
         run: |
           ./gradlew publish  # Use the appropriate command for publishing in your project

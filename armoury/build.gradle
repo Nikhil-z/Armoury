@@ -32,6 +32,30 @@ android {
 
 }
 
+publishing {
+
+    repositories {
+        maven {
+
+
+            /*groupId = 'com.example' // Replace with your desired group ID
+            artifactId = 'library-name' // Replace with your library's artifact ID*/
+
+            version = '1.0.0' // Replace with the version you want to publish
+
+            // Configure artifacts to be published (e.g., AAR file)
+           // artifact("$buildDir/outputs/aar/library-name-release.aar")
+
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/Nikhil-z/ArmourySample"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.10.1'

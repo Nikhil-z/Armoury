@@ -39,8 +39,8 @@ jobs:
       - name: Create tag
         run: git tag ${{ steps.determine_next_tag.outputs.next_tag }}
 
-      - name: Push tag
-        run: git push origin ${{ steps.determine_next_tag.outputs.next_tag }}
+     # - name: Push tag
+      #  run: git push origin ${{ steps.determine_next_tag.outputs.next_tag }}
 
       - name: Create release
         id: create_release

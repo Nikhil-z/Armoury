@@ -81,7 +81,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
-    implementation "io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1"
+    // Exclude conflicting dependencies from detekt-formatting-1.18.1
+    /*implementation('io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1') {
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-ruleset-experimental'
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-core'
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-ruleset-standard'
+    }*/
 
 }
 

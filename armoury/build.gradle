@@ -34,11 +34,13 @@ android {
 
 
 def publicationGroup = 'com.github.Nikhil-z'
-def publicationVersion = '1.3.0'
+def publicationVersion = '1.3.1'
 def publicationArtifactId = 'armoury'
 
 publishing {
-    publications {
+
+    /*Used for publish inside github*/
+    /*publications {
 
         release(MavenPublication) {
             groupId = publicationGroup // Replace with group ID
@@ -57,7 +59,7 @@ publishing {
                 password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
             }
         }
-    }
+    }*/
 }
 
 

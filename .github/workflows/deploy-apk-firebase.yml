@@ -1,10 +1,10 @@
-name: Build and Deploy apk to firebase
+name: Build and Deploy APK to Firebase
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "testing" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "testing" ]
 
 jobs:
   build:
@@ -19,11 +19,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'android'
+      - name: Grant execute permissions to gradlew
+        run: chmod +x gradlew
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
@@ -38,3 +35,6 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: internaltest
           file: app/build/outputs/apk/debug/app-debug.apk
+          releaseNotes: |
+            This an automated release note for the APK.
+            Created by Nikhil-z.

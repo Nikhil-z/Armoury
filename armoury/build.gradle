@@ -34,7 +34,7 @@ android {
 
 
 def publicationGroup = 'com.github.Nikhil-z'
-def publicationVersion = '1.2.1'
+def publicationVersion = '1.3.0'
 def publicationArtifactId = 'armoury'
 
 publishing {
@@ -81,19 +81,26 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
+    // Exclude conflicting dependencies from detekt-formatting-1.18.1
+    /*implementation('io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1') {
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-ruleset-experimental'
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-core'
+        exclude group: 'com.pinterest.ktlint', module: 'ktlint-ruleset-standard'
+    }*/
+
 }
 
 /*Used for deploying to Jcenter */
-/*afterEvaluate {
+afterEvaluate {
 
     android.libraryVariants.each { variant ->
         publishing.publications.create(variant.name, MavenPublication) {
             from components.findByName(variant.name)
-            groupId = "com.github.Nikhil-z"
-            artifactId = "Armoury"
-            version = "1.0.3"
+            groupId = publicationGroup
+            artifactId = publicationArtifactId
+            version = publicationVersion
         }
     }
-}*/
+}
 
 

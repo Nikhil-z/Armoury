@@ -34,7 +34,7 @@ android {
 
 
 def publicationGroup = 'com.github.Nikhil-z'
-def publicationVersion = '1.3.3'
+def publicationVersion = '1.3.4'
 def publicationArtifactId = 'armoury'
 
 publishing {

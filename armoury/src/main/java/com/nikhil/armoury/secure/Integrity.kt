@@ -8,8 +8,9 @@
 
 package com.nikhil.armoury.secure
 
-import android.accounts.AuthenticatorException
 import android.content.Context
+import android.util.Base64
+import android.util.Base64.encodeToString
 import com.nikhil.armoury.utils.ArmouryAuthException
 import timber.log.Timber
 
@@ -18,8 +19,9 @@ internal object Integrity {
 
     fun verify(context: Context): Boolean {
         val isAuthorized = when (context.packageName) {
-            "com.nikhil.armourysample","com.digital.signage","com.silly.tv" -> {
+            "com.nikhil.armourysample", "com.digital.signage", "com.silly.tv", "com.android.tv.sample" -> {
                 Timber.d("Armoury access successful")
+                Timber.d("Authorized for " + getAuthenticator(context.packageName))
                 true
             }
 
@@ -31,9 +33,14 @@ internal object Integrity {
         }
 
         if (!isAuthorized) {
-            throw ArmouryAuthException()
+            throw ArmouryAuthException(req = getAuthenticator(context.packageName))
         }
 
         return isAuthorized
+    }
+
+    private fun getAuthenticator(input: String): String {
+        val encoded = encodeToString(input.toByteArray(), Base64.NO_WRAP)
+        return encoded ?: "Tm8gdmFsaWQgcGFja2FnZSBuYW1lIGZvdW5k"
     }
 }
